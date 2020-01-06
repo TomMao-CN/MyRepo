@@ -1,5 +1,5 @@
 # MyRepo
-DataBase是数据库文件。所用的数据库为SqlServer。
+DataBase是数据库文件。所用的数据库为SqlServer2012。
 
 WebServer是服务器项目。.Net Framework MVC模式。
 
