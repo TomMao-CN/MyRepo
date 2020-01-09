@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/01-login/index.vue'
 import Main from '@/views/02-main/index.vue'
-import Admin from '@/views/03-admin/index.vue'
+import ErrorRoute from '@/views/03-404page/index.vue'
+import Admin from '@/views/06-admin/index.vue'
 import Article from '@/views/04-article/index.vue'
 import Exception from '@/views/05-exception/index.vue'
 
@@ -43,6 +44,12 @@ const routes = [
     children: [
       { path: '/excetion', name: ' 异常日志', component: Exception }
     ]
+  },
+  {
+    //*是路由未找到时的跳转，须放到路由配置的最后面
+    path: '*',
+    name: '404页',
+    component: ErrorRoute
   },
 ]
 

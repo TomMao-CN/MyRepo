@@ -61,4 +61,16 @@ export namespace Utils {
         }
 
     }
+    /**
+     * 处理系统枚举
+     */
+    export class HandleEnums {
+        static ConvertValueToLabel(ary: any, index: number) {
+            for (let item of ary) {
+                if (item.value == index) {
+                    return item.label;
+                }
+            }
+        }
+    }
 }

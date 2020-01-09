@@ -2,7 +2,7 @@
   <div class="every-page">
     <div class="toolbar">
       <el-row>
-        <el-col :span="5">
+        <el-col :span="4">
           <el-date-picker
             type="datetime"
             placeholder="选择开始时间"
@@ -11,7 +11,7 @@
             v-model="searchParams.startTime"
           ></el-date-picker>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="4">
           <el-date-picker
             type="datetime"
             placeholder="选择结束时间"
@@ -26,14 +26,14 @@
       </el-row>
     </div>
     <div class="content">
-      <el-table :data="lstExceptionLog" v-loading="loading">
+      <el-table :data="exceptionLogs" v-loading="loading">
         <el-table-column prop="Source" label="数据源"></el-table-column>
         <el-table-column prop="Message" label="异常信息"></el-table-column>
         <el-table-column prop="Time" label="触发时间"></el-table-column>
         <el-table-column label="堆栈跟踪">
           <template slot-scope="scope">
             <el-popover trigger="click" placement="top">
-              <p>{{ scope.row.StackTrace }}</p>
+              <div>{{ scope.row.StackTrace }}</div>
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">INFO</el-tag>
               </div>
