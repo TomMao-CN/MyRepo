@@ -39,6 +39,22 @@
         <el-table-column prop="Name" label="姓名"></el-table-column>
         <el-table-column prop="Type" label="管理员类型"></el-table-column>
         <el-table-column prop="Status" label="角色状态"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              circle
+              @click="handleEdit(scope.$index, scope.row)"
+            ></el-button>
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              @click="handleDelete(scope.$index, scope.row)"
+            ></el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="change-page">
         <el-col :span="24">
@@ -54,11 +70,39 @@
     </div>
     <!-- 弹出框 -->
     <div class="dialog">
-      <el-dialog title="dialogTitle" :visible.sync="dialogVisible">
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="handleCancel">取 消</el-button>
-          <el-button type="primary">确 定</el-button>
-        </span>
+      <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
+        <el-form label-width="90px">
+          <el-form-item label="姓名">
+            <el-input type="text" v-model="modifyParams.name"></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input type="password" v-model="modifyParams.password"></el-input>
+          </el-form-item>
+          <el-form-item label="管理员类型">
+            <el-select v-model="modifyParams.type" placeholder="管理员类型">
+              <el-option
+                v-for="item in typeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="角色状态">
+            <el-select v-model="modifyParams.status" placeholder="角色状态">
+              <el-option
+                v-for="item in statusOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" :loading="loading" @click="modifyAdmin">创建</el-button>
+            <el-button @click="handleCancel">取消</el-button>
+          </el-form-item>
+        </el-form>
       </el-dialog>
     </div>
   </div>

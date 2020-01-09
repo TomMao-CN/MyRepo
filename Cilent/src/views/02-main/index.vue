@@ -44,6 +44,8 @@
             <i v-if="!isCollapse" class="el-icon-caret-left"></i>
             <i v-if="isCollapse" class="el-icon-caret-right"></i>
           </div>
+          <!-- 刷新 -->
+          <i class="el-icon-refresh" @click="renovate"></i>
           <!-- 管理员信息 -->
           <div class="app-header-userinfo">
             <el-dropdown trigger="hover">

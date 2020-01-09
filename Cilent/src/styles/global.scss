@@ -116,9 +116,17 @@ html {
         background-color: rgb(240, 241, 223);
       }    
     }
-    // .dialog{
-     
-    // }
+    .dialog{
+     .el-input{
+       width: 50%!important;
+     }
+     .el-select{
+      width: 100%;
+      .el-input{
+        width: 50%!important;
+      }
+     }
+    }
    
   }
   // 异常页弹出框

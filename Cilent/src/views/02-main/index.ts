@@ -29,12 +29,15 @@ export default Vue.extend({
                     this.$router.push('/');
                 })
                 .catch(() => { });
+        },
+        renovate(){
+            location.reload();
         }
 
     },
     mounted() {
         this.adminName = sessionStorage.getItem('adminName');
-        //管理员类型为超级管理员，则读取本地路由    
+        //管理员类型为超级管理员，则读取本地路由
         if (sessionStorage.getItem('adminType') == SharedEnums.AdminType.SuperAdmin as unknown as string) {
             this.routes = this.$router.options.routes;
         } else {
