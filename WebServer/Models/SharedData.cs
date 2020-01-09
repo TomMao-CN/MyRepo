@@ -61,7 +61,17 @@ namespace Models
         {
             get
             {
-                return Common.HandleConfig.GetAppSettingValue("DomainName");
+                return (string)Common.HandleConfig.GetAppSettingValue("DomainName");
+            }
+        }
+        #endregion
+
+        #region 每页显示多少条数据
+        public static int PageSize
+        {
+            get
+            {
+                return 10; ;
             }
         }
         #endregion
