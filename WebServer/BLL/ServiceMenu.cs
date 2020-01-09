@@ -16,38 +16,38 @@ namespace BLL
         /// <returns></returns>
         public List<object> GetAdminMenu(int adminID)
         {
-            List<object> lstResult = new List<object>();
+            List<object> list = new List<object>();
             try
             {
               
                 //找到管理员绑定的系统id
                 List<int> sysMenuID = dataContext.AdminMenu.Where(m => m.AdminID == adminID && m.Status == (int)Models.Enums.SharedStatus.Normal).Select(m => m.MenuID).ToList();
                 //找到绑定的系统
-                List<Models.Menu> lstMenu = dataContext.Menu.Where(m => sysMenuID.Contains(m.ID) && m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
+                List<Models.Menu> menus = dataContext.Menu.Where(m => sysMenuID.Contains(m.ID) && m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
                 //找到系统绑定的菜单
-                List<Models.Menu> lstChildMenu = new List<Models.Menu>();
-                foreach (Models.Menu objMenu in lstMenu)
+                List<Models.Menu> childMenus = new List<Models.Menu>();
+                foreach (Models.Menu menu in menus)
                 {
                     //子菜单容器
-                    List<object> lstChildResult = new List<object>();
-                    lstChildMenu = dataContext.Menu.Where(m => m.ParentID == objMenu.ID && m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
-                    foreach (Models.Menu objChildMenu in lstChildMenu)
+                    List<object> childList = new List<object>();
+                    childMenus = dataContext.Menu.Where(m => m.ParentID == menu.ID && m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
+                    foreach (Models.Menu item in childMenus)
                     {
-                        lstChildResult.Add(new
+                        childList.Add(new
                         {
-                            name = objChildMenu.Name,
-                            path=objChildMenu.Path,
-                            hidden=objChildMenu.Hidden
+                            name = item.Name,
+                            path=item.Path,
+                            hidden=item.Hidden
                         });
                     }
 
-                    lstResult.Add(new
+                    list.Add(new
                     {
-                        name = objMenu.Name,
-                        path = objMenu.Path,
-                        hidden = objMenu.Hidden,
-                        icon = objMenu.Icon,
-                        children=lstChildResult
+                        name = menu.Name,
+                        path = menu.Path,
+                        hidden = menu.Hidden,
+                        icon = menu.Icon,
+                        children=childList
                     });
                 }
 
@@ -57,7 +57,7 @@ namespace BLL
             {
                 new BLL.ServiceException().AddExceptionLog(ex);
             }
-            return lstResult;
+            return list;
         }
         #endregion
     }
