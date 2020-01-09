@@ -16,9 +16,9 @@ namespace Common
         /// </summary>
         /// <param name="key">键</param>
         /// <returns></returns>
-        public static string GetAppSettingValue(string key)
+        public static object GetAppSettingValue(string key)
         {
-            return ConfigurationManager.AppSettings[key].ToString();
+            return ConfigurationManager.AppSettings[key];
         }
         #endregion
 
