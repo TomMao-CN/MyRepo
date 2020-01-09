@@ -43,8 +43,8 @@ namespace WebServer.Controllers
                 //获取请求参数token
                 string token = Common.HandleHttp.GetFormParams("token");
                 //查询token是否属于管理员
-                Models.Administrator objAdminstrator = dataContext.Administrator.Where(m => m.Token == token && m.Status == (int)Models.Enums.RoleStatus.Normal).FirstOrDefault();
-                if (objAdminstrator == null)
+                Models.Administrator administrator = dataContext.Administrator.Where(m => m.Token == token && m.Status == (int)Models.Enums.RoleStatus.Normal).FirstOrDefault();
+                if (administrator == null)
                 {
                     errorCode = 10002;
                 }

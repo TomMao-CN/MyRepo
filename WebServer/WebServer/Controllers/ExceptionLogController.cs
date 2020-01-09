@@ -11,14 +11,19 @@ namespace WebServer.Controllers
     public class ExceptionLogController : SuperController
     {
         #region 异常日志列表
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
         public JsonResult GetExceptionLogList(string startTime, string endTime, int page = 1)
         {
-            int errorCode = 0;
-            string error = string.Empty;
             object result = new object();      
             try
             {
-                List<object> lstResult = new List<object>();
+             
                 DateTime? sTime = Common.ConvertData.StrToDateTime(startTime);
                 DateTime? eTime = Common.ConvertData.StrToDateTime(endTime);
 
@@ -27,35 +32,38 @@ namespace WebServer.Controllers
                 if (eTime == null)
                     eTime = Models.SharedData.MaxTime;
 
-                List<Models.ExceptionLog> lstExceptionLog = dataContext.ExceptionLog.Where(m => m.Time >= sTime && m.Time < eTime).ToList();
+                List<Models.ExceptionLog> exceptionLogs = dataContext.ExceptionLog.Where(m => m.Time >= sTime && m.Time < eTime).ToList();
 
                 int pageSize = 10;
                 int pagePre = page * pageSize - pageSize;
-                int totalCount = lstExceptionLog.Count;
+                int totalCount = exceptionLogs.Count;
                 int mod = totalCount % pageSize;
                 int pageCout = totalCount / pageSize + (mod == 0 ? 0 : 1);
-                lstExceptionLog = lstExceptionLog.OrderByDescending(m => m.Time).Skip(pagePre).Take(pageSize).ToList();
+                int totalPage = totalCount / pageSize + (totalCount % pageSize == 0 ? 0 : 1);
 
-                if (lstExceptionLog.Count > 0)
+                exceptionLogs = exceptionLogs.OrderByDescending(m => m.Time).Skip(pagePre).Take(pageSize).ToList();
+                List<object> list = new List<object>();
+
+                if (exceptionLogs.Count > 0)
                 {
-                    foreach (var objExceptionLog in lstExceptionLog)
+                    foreach (var exceptionLog in exceptionLogs)
                     {
-                        lstResult.Add(new
+                        list.Add(new
                         {
-                            objExceptionLog.ID,
-                            objExceptionLog.Source,
-                            objExceptionLog.Message,
-                            objExceptionLog.StackTrace,
-                            Time = Common.ConvertData.ConvertDateTime(objExceptionLog.Time, 2)
+                            exceptionLog.ID,
+                            exceptionLog.Source,
+                            exceptionLog.Message,
+                            exceptionLog.StackTrace,
+                            Time = Common.ConvertData.ConvertDateTime(exceptionLog.Time, 2)
                         });
                     }
                 }
                 result = new
                 {
-                    list = lstResult,
+                    list,
                     page,
                     totalCount,
-                    totalPage = totalCount / pageSize + (totalCount % pageSize == 0 ? 0 : 1),
+                    totalPage,
                     pageSize
                 };
             }

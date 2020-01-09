@@ -56,7 +56,15 @@ namespace WebServer.Controllers
         #endregion
 
         #region 获取管理员
-        public JsonResult GetAdmin(string name, int type, int status)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name">名字</param>
+        /// <param name="type">管理员类型</param>
+        /// <param name="status">角色状态</param>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
+        public JsonResult GetAdmins(string name = null, int type = 0, int status = 0, int page = 1)
         {
             object result = null;
             try
@@ -74,12 +82,46 @@ namespace WebServer.Controllers
                 {
                     query = query.And(m => m.Status == status);
                 }
+
+                int pageSize = Models.SharedData.PageSize;
+                int pagePre = page * pageSize - pageSize;
+                int totalCount = dataContext.Administrator.Where(query).Count();
+                int mod = totalCount % pageSize;
+                int pageCout = totalCount / pageSize + (mod == 0 ? 0 : 1);
+                int totalPage = totalCount / pageSize + (totalCount % pageSize == 0 ? 0 : 1);
+
+                List<Models.Administrator> administrators = dataContext.Administrator.Where(query).OrderByDescending(m => m.ID).Skip(pagePre).Take(pageSize).ToList();
+                List<object> list = new List<object>();
+                if (administrators.Count > 0)
+                {
+                   
+                    foreach (Models.Administrator administrator in administrators)
+                    {
+                        list.Add(new {
+                            administrator.Name,
+                            administrator.Avatar,
+                            Status = BLL.ServiceEnums.ConvertRoleStatus(administrator.Status),
+                            Type = BLL.ServiceEnums.ConvertAdminType(administrator.Type)
+                        });
+                    }
+                }
+                result = new
+                {
+                    list,
+                    page,
+                    totalCount,
+                    totalPage,
+                    pageSize
+                };
             }
             catch (Exception ex)
             {
-
+                errorCode = 10001;
+                error = new BLL.ServiceError().GetErrorInfo(errorCode);
+                new BLL.ServiceException().AddExceptionLog(ex);
             }
-            return Json(errorCode,error,result,true);
+
+            return Json(errorCode, error, result, true);
         }
         #endregion
     }
