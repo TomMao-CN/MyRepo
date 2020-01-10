@@ -15,7 +15,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                Models.Administrator objAdmin = dataContext.Administrator.Where(m => m.ID == formAdmin.ID && m.Status == (int)Models.Enums.RoleStatus.Normal).FirstOrDefault();
+                Models.Administrator objAdmin = dataContext.Administrator.Where(m => m.ID == formAdmin.ID).FirstOrDefault();
                 //对象为空，则增加
                 if (objAdmin == null)
                 {
@@ -28,9 +28,9 @@ namespace WebServer.Controllers
                         //密码进行md5加密
                         Password = Common.HandleString.MD5(formAdmin.Password + token),
                         Avatar = formAdmin.Avatar,
-                        Type = 1,
-                        Status = 1,
-                        LoginTime = DateTime.Now
+                        Type = formAdmin.Type,
+                        Status = formAdmin.Status,
+                        LoginTime =Models.SharedData.MinTime
                     };
                     dataContext.Administrator.InsertOnSubmit(objAdmin);
                 }
@@ -98,10 +98,11 @@ namespace WebServer.Controllers
                     foreach (Models.Administrator administrator in administrators)
                     {
                         list.Add(new {
+                            administrator.ID,
                             administrator.Name,
                             administrator.Avatar,
-                            Status = BLL.ServiceEnums.ConvertRoleStatus(administrator.Status),
-                            Type = BLL.ServiceEnums.ConvertAdminType(administrator.Type)
+                            administrator.Status,
+                            administrator.Type
                         });
                     }
                 }
@@ -122,6 +123,33 @@ namespace WebServer.Controllers
             }
 
             return Json(errorCode, error, result, true);
+        }
+        #endregion
+
+        #region 删除管理员
+        public JsonResult DeleteAdmin(int adminID)
+        {
+            try
+            {
+                Models.Administrator administrator = dataContext.Administrator.Where(m => m.ID == adminID).FirstOrDefault();
+                if (administrator != null)
+                {
+                    dataContext.Administrator.DeleteOnSubmit(administrator);
+                    dataContext.SubmitChanges();
+                }
+                else
+                    errorCode = 20001;
+            }
+            catch(Exception ex)
+            {
+                errorCode = 10001;
+                new BLL.ServiceException().AddExceptionLog(ex);
+            }
+            if(errorCode!=0)
+            {
+                error = new BLL.ServiceError().GetErrorInfo(errorCode);
+            }
+            return Json(errorCode,error,null,true);
         }
         #endregion
     }
