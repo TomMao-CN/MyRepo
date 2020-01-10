@@ -33,17 +33,19 @@ export default Vue.extend({
                     }).then((res: any) => {
                         if (res.data.error_code == 0) {
                             //将管理员信息保存在sessionStorage
-                            sessionStorage.setItem('adminName', res.data.data.name);
-                            sessionStorage.setItem('adminToken', res.data.data.token);
-                            sessionStorage.setItem('adminType', res.data.data.type);
-                            sessionStorage.setItem('adminMenus', JSON.stringify(res.data.data.menus));
+                            sessionStorage.setItem('adminName', res.data.data.Name);
+                            sessionStorage.setItem('adminToken', res.data.data.Token);
+                            sessionStorage.setItem('adminType', res.data.data.Type);
+                            sessionStorage.setItem('adminAvatar', res.data.data.Avatar);
+                            sessionStorage.setItem('adminMenus', JSON.stringify(res.data.data.Menus));
                             this.loading = false;
                             //路由跳转
-                            this.$router.push({ path: '/main' });
+                            this.$router.push({ path: '/exception' });
                             Utils.ElementUI.MessageTips("登录成功！", 1)
                         }
                         else {
                             Utils.ElementUI.MessageTips(res.data.error, 3);
+                            this.loading=false;
                         }
                     }).catch((error: string) => {
                         alert('前端异常：' + error);

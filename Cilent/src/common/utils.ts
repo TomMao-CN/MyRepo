@@ -8,7 +8,7 @@ export namespace Utils {
         /**
          * 消息提示
          * @param msg 
-         * @param type 
+         * @param type 1=成功，2=警告，3=错误
          */
         static MessageTips(msg: string, type: number) {
             if (msg == null) {
@@ -65,7 +65,7 @@ export namespace Utils {
      * 处理系统枚举
      */
     export class HandleEnums {
-        static ConvertValueToLabel(ary: any, index: number) {
+        static ConvertValueToLabel(ary: any, index: number): string {
             for (let item of ary) {
                 if (item.value == index) {
                     return item.label;

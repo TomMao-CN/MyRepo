@@ -2,10 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/01-login/index.vue'
 import Main from '@/views/02-main/index.vue'
-import ErrorRoute from '@/views/03-404page/index.vue'
-import Admin from '@/views/06-admin/index.vue'
-import Article from '@/views/04-article/index.vue'
+import ErrorPage from '@/views/error-page/index.vue'
+import Admin from '@/views/04-admin/index.vue'
 import Exception from '@/views/05-exception/index.vue'
+import Article from '@/views/06-article/index.vue'
 
 Vue.use(VueRouter)
 
@@ -42,14 +42,14 @@ const routes = [
     icon: 'el-icon-info',
     component: Main,
     children: [
-      { path: '/excetion', name: ' 异常日志', component: Exception }
+      { path: '/exception', name: ' 异常日志', component: Exception }
     ]
   },
   {
     //*是路由未找到时的跳转，须放到路由配置的最后面
     path: '*',
     name: '404页',
-    component: ErrorRoute
+    component: ErrorPage
   },
 ]
 

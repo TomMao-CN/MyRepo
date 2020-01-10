@@ -21,7 +21,7 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <template v-for="item in routes">
+          <template v-for="item in adminMenus">
             <template v-if="item.hidden==false">
               <el-submenu :index="item.name" :key="item.name">
                 <template slot="title">
@@ -52,7 +52,8 @@
               <span class="el-dropdown-link">
                 <strong style="color:black">{{adminName}}</strong>
               </span>
-              <i class="el-icon-s-custom el-icon--right"></i>
+              <el-avatar :size="40" :src="adminAvatar"></el-avatar>
+              <!-- <i class="el-icon-s-custom el-icon--right"></i> -->
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>我的消息</el-dropdown-item>
                 <el-dropdown-item>设置</el-dropdown-item>

@@ -7,7 +7,8 @@ export default Vue.extend({
             loading: false,
             isCollapse: false,
             adminName: null,
-            routes: null
+            adminAvatar: sessionStorage.getItem("adminAvatar"),
+            adminMenus: null,
         }
     },
     methods: {
@@ -30,7 +31,7 @@ export default Vue.extend({
                 })
                 .catch(() => { });
         },
-        renovate(){
+        renovate() {
             location.reload();
         }
 
@@ -39,10 +40,10 @@ export default Vue.extend({
         this.adminName = sessionStorage.getItem('adminName');
         //管理员类型为超级管理员，则读取本地路由
         if (sessionStorage.getItem('adminType') == SharedEnums.AdminType.SuperAdmin as unknown as string) {
-            this.routes = this.$router.options.routes;
+            this.adminMenus = this.$router.options.routes;
         } else {
             //否则，读取数据库路由
-            this.routes = JSON.parse(sessionStorage.getItem('adminMenus'));
+            this.adminMenus = JSON.parse(sessionStorage.getItem('adminMenus'));
         }
 
     }

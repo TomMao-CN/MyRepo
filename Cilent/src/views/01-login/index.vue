@@ -40,12 +40,12 @@
 
   //登录框水平垂直居中的方法
   position: absolute;
-  left: 45%;
-  top: 45%;
-  margin-left: -100px;
-  margin-top: -100px;
+  left: 50%;
+  top: 50%;
+  margin-left: -12%;
+  margin-top: -10%;
 
-  width: 350px;
+  width: 24%;
   padding: 35px 35px 15px;
   background: #fff;
   border: 1px solid #eaeaea;
