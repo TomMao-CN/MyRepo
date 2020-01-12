@@ -30,12 +30,18 @@ namespace WebServer.Controllers
 
                 if (errorCode == 0)
                 {
+                    //更新管理员登陆时间
+                    administrator.LoginTime = DateTime.Now;
+                    dataContext.SubmitChanges();
                     result = new
                     {
+                        administrator.ID,
                         administrator.Name,
                         administrator.Token,
                         administrator.Type,
                         administrator.Avatar,
+                        administrator.Status,
+                        administrator.Password,
                         Menus = new BLL.ServiceMenu().GetAdminMenu(administrator.ID)
                     };
                 }

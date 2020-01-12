@@ -10,7 +10,7 @@ namespace WebServer.Controllers
 {
     public class AdministratorController : SuperController
     {
-        #region 添加管理员
+        #region 添加/修改管理员
         public JsonResult ModifyAdmin(Models.Administrator formAdmin)
         {
             try
@@ -30,17 +30,27 @@ namespace WebServer.Controllers
                         Avatar = formAdmin.Avatar,
                         Type = formAdmin.Type,
                         Status = formAdmin.Status,
-                        LoginTime =Models.SharedData.MinTime
+                        LoginTime = Models.SharedData.MinTime
                     };
                     dataContext.Administrator.InsertOnSubmit(objAdmin);
                 }
                 //否则为修改
                 else
                 {
-                    objAdmin.Name = formAdmin.Name;
-                    objAdmin.Avatar = formAdmin.Avatar;
-                    objAdmin.Status = formAdmin.Status;
-                    objAdmin.Type = formAdmin.Type;
+                    //如果密码不为空则是修改密码
+                    if (formAdmin.Password != null)
+                    {
+                        objAdmin.Password = Common.HandleString.MD5(formAdmin.Password+objAdmin.Token);
+                    }
+                    //否则为修改信息
+                    else
+                    {
+                        objAdmin.Name = formAdmin.Name;
+                        objAdmin.Avatar = formAdmin.Avatar;
+                        objAdmin.Status = formAdmin.Status;
+                        objAdmin.Type = formAdmin.Type;
+                    }
+
                 }
                 //数据入库
                 dataContext.SubmitChanges();
@@ -94,15 +104,17 @@ namespace WebServer.Controllers
                 List<object> list = new List<object>();
                 if (administrators.Count > 0)
                 {
-                   
+
                     foreach (Models.Administrator administrator in administrators)
                     {
-                        list.Add(new {
+                        list.Add(new
+                        {
                             administrator.ID,
                             administrator.Name,
                             administrator.Avatar,
                             administrator.Status,
-                            administrator.Type
+                            administrator.Type,
+                            LoginTime = Common.ConvertData.ConvertDateTimeToStr(administrator.LoginTime, 2)
                         });
                     }
                 }
@@ -140,16 +152,16 @@ namespace WebServer.Controllers
                 else
                     errorCode = 20001;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 errorCode = 10001;
                 new BLL.ServiceException().AddExceptionLog(ex);
             }
-            if(errorCode!=0)
+            if (errorCode != 0)
             {
                 error = new BLL.ServiceError().GetErrorInfo(errorCode);
             }
-            return Json(errorCode,error,null,true);
+            return Json(errorCode, error, null, true);
         }
         #endregion
     }

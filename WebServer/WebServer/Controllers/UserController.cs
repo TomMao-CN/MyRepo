@@ -56,7 +56,7 @@ namespace WebServer.Controllers
                         Name = objUser.Name.Trim(),
                         Gender = new BLL.ServiceUser().ConvertGender(objUser.Gender),
                         objUser.Age,
-                        Birthday = Common.ConvertData.ConvertDateTime(objUser.Birthday, 1),
+                        Birthday = Common.ConvertData.ConvertDateTimeToStr(objUser.Birthday, 1),
                         objUser.Status,
                         objUser.Signature,
                         objUser.Portrait

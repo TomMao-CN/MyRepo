@@ -54,7 +54,7 @@ namespace WebServer.Controllers
                             exceptionLog.Source,
                             exceptionLog.Message,
                             exceptionLog.StackTrace,
-                            Time = Common.ConvertData.ConvertDateTime(exceptionLog.Time, 2)
+                            Time = Common.ConvertData.ConvertDateTimeToStr(exceptionLog.Time, 2)
                         });
                     }
                 }
