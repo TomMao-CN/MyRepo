@@ -23,32 +23,30 @@ export default Vue.extend({
          * 登录提交
          */
         handleSubmit() {
-            //valid不能为any类型,否则表单验证会失效。
+            // valid不能为any类型,否则表单验证会失效。
             this.$refs.formParams.validate((valid: string | number) => {
                 if (valid) {
                     this.loading = true;
-                    this.axios.post(SharedData.ApiUrl + "Shared/LoginSystem", {
+                    let url = SharedData.ApiUrl + 'Shared/LoginSystem';
+                    let params = {
                         name: this.formParams.name,
                         password: this.formParams.password
-                    }).then((res: any) => {
-                        if (res.data.error_code == 0) {
+                    };
+                    //Shared控制器不能用封装后的axios,会出现token找不到的问题
+                    this.axios.post(url, params).then((response: any) => {
+                        if (response.data.error_code == 0) {
                             //将管理员信息保存在sessionStorage
-                            sessionStorage.setItem('adminName', res.data.data.Name);
-                            sessionStorage.setItem('adminToken', res.data.data.Token);
-                            sessionStorage.setItem('adminType', res.data.data.Type);
-                            sessionStorage.setItem('adminAvatar', res.data.data.Avatar);
-                            sessionStorage.setItem('adminMenus', JSON.stringify(res.data.data.Menus));
-                            this.loading = false;
+                            sessionStorage.setItem('admin', JSON.stringify(response.data.data));
                             //路由跳转
-                            this.$router.push({ path: '/exception' });
-                            Utils.ElementUI.MessageTips("登录成功！", 1)
+                            this.$router.push({ path: '/home' });
+                            location.reload();
+                            Utils.ElementUI.MessageTips("登录成功！", 1);
+                        } else {
+                            Utils.ElementUI.MessageTips(response.data.error, 3);
                         }
-                        else {
-                            Utils.ElementUI.MessageTips(res.data.error, 3);
-                            this.loading=false;
-                        }
-                    }).catch((error: string) => {
-                        alert('前端异常：' + error);
+                        this.loading = false;
+                    }).catch((error: any) => {
+                        alert('数据异常：' + error);
                     });
                 } else {
                     Utils.ElementUI.MessageTips("错误的提交！", 3);

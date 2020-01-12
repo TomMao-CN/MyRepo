@@ -2,6 +2,8 @@ import { SharedEnums } from '@/common/enums';
 export namespace SharedData {
     //请求接口域名
     export const ApiUrl = "http://tommao.com/";
+    //当前登陆的管理员
+    export let OnlineAdmin = JSON.parse(sessionStorage.getItem('admin'));
     //下拉框管理员类型
     export let AdminTypeOptions = [
         {

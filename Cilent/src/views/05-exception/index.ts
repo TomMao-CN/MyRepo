@@ -25,27 +25,17 @@ export default Vue.extend({
             this.loading = true;
             let url: string = SharedData.ApiUrl + "ExceptionLog/GetExceptionLogList";
             let params = {
-                token: sessionStorage.getItem('adminToken'),
                 startTime: this.searchParams.startTime,
                 endTime: this.searchParams.endTime,
                 page: this.searchParams.page
             }
-            let formParams = Utils.HandleRequest.ConvertObjToForm(params);
-            this.axios.post(url, formParams).then((response: any) => {
-                if (response.data.error_code == 0) {
-                    this.exceptionLogs = response.data.data.list;
-                    this.totalCount = response.data.data.totalCount;
-                    this.pageSize = response.data.data.pageSize;
-                    this.currentPage = response.data.data.page;
-                    this.searchParams.page = 1;
-                    this.loading = false;
-                } else {
-                    Utils.ElementUI.MessageTips(response.data.error, 3);
-                    console.log(response);
-                }
-
-            }).catch((error: any) => {
-                alert('数据异常：' + error);
+            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                this.exceptionLogs = res.list;
+                this.totalCount = res.totalCount;
+                this.pageSize = res.pageSize;
+                this.currentPage = res.page;
+                this.searchParams.page = 1;
+                this.loading = false;
             });
         },
 

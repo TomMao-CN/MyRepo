@@ -44,6 +44,7 @@
         <el-table-column prop="Name" label="姓名"></el-table-column>
         <el-table-column prop="Type" label="管理员类型" :formatter="convetRoleType"></el-table-column>
         <el-table-column prop="Status" label="角色状态" :formatter="convertStatus"></el-table-column>
+        <el-table-column prop="LoginTime" label="登录时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
@@ -77,10 +78,10 @@
     <div class="dialog">
       <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
         <el-form label-width="90px">
-          <el-form-item label="姓名">
+          <el-form-item label="姓名" v-if="display">
             <el-input type="text" v-model="modifyParams.name"></el-input>
           </el-form-item>
-          <el-form-item label="头像">
+          <el-form-item label="头像" v-if="display">
             <el-upload
               class="avatar-uploader"
               :action="adminAvatarUpUrl"
@@ -147,14 +148,6 @@
   width: 150px;
   height: 150px;
   display: block;
-}
-.icon-div {
-  background-color: rgb(201, 15, 15);
-  // position: absolute;
-  // left: 50%;
-  // top: 50%;
-  // margin-left: -12%;
-  // margin-top: -10%;
 }
 </style>
 <script src="./index.ts"></script>

@@ -30,7 +30,7 @@
         <el-table-column prop="Source" label="数据源"></el-table-column>
         <el-table-column prop="Message" label="异常信息"></el-table-column>
         <el-table-column prop="Time" label="触发时间"></el-table-column>
-        <el-table-column label="堆栈跟踪">
+        <el-table-column label="堆栈追踪">
           <template slot-scope="scope">
             <el-popover trigger="click" placement="top">
               <div>{{ scope.row.StackTrace }}</div>

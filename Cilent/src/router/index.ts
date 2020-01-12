@@ -2,10 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/01-login/index.vue'
 import Main from '@/views/02-main/index.vue'
+import Home from '@/views/03-home/index.vue'
 import ErrorPage from '@/views/error-page/index.vue'
 import Admin from '@/views/04-admin/index.vue'
 import Exception from '@/views/05-exception/index.vue'
 import Article from '@/views/06-article/index.vue'
+
 
 Vue.use(VueRouter)
 
@@ -14,6 +16,16 @@ const routes = [
     path: '/',
     name: '登录',
     component: Login
+  },
+  {
+    path: '/main',
+    name: '主页系统',
+    hidden: true,
+    icon: 'el-icon-s-home',
+    component: Main,
+    children: [
+      { path: '/home', name: '首页', component: Home }
+    ]
   },
   {
     path: '/main',

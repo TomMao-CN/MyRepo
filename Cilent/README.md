@@ -38,3 +38,12 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 ```
+
+#### md5
+```
+安装方式
+cnpm install --save js-md5
+使用
+import md5 from 'js-md5'
+
+```

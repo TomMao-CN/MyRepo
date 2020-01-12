@@ -11,6 +11,7 @@
     "core-js": "^3.4.4",
     "element-ui": "^2.13.0",
     "font-awesome": "^4.7.0",
+    "js-md5": "^0.7.3",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
     "vue-class-component": "^7.0.2",

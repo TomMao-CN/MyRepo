@@ -27,7 +27,6 @@ export default Vue.extend({
             currentPage: 0,
             typeOptions: SharedData.AdminTypeOptions,
             statusOptions: SharedData.RoleStatusOptions,
-            imageUrl: '',
             //判断密码框是否显示
             display: true,
             //组件数据
@@ -46,27 +45,18 @@ export default Vue.extend({
             this.loading = true;
             let url: string = SharedData.ApiUrl + "Administrator/GetAdmins";
             let params = {
-                token: sessionStorage.getItem('adminToken'),
                 name: this.searchParams.name,
                 type: this.searchParams.type,
                 status: this.searchParams.status,
                 page: this.searchParams.page
             }
-            let formParams = Utils.HandleRequest.ConvertObjToForm(params);
-            this.axios.post(url, formParams).then((response: any) => {
-                if (response.data.error_code == 0) {
-                    this.administrators = response.data.data.list;
-                    this.totalCount = response.data.data.totalCount;
-                    this.pageSize = response.data.data.pageSize;
-                    this.currentPage = response.data.data.page;
-                    this.searchParams.page = 1;
-                    this.loading = false;
-                } else {
-                    Utils.ElementUI.MessageTips(response.data.error, 3);
-                }
-
-            }).catch((error: any) => {
-                alert('数据异常：' + error);
+            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                this.loading = false;
+                this.administrators = res.list;
+                this.totalCount = res.totalCount;
+                this.pageSize = res.pageSize;
+                this.currentPage = res.page;
+                this.searchParams.page = 1;
             });
         },
         /**
@@ -76,7 +66,6 @@ export default Vue.extend({
             this.loading = true;
             let url: string = SharedData.ApiUrl + "Administrator/ModifyAdmin";
             let params = {
-                token: sessionStorage.getItem('adminToken'),
                 ID: this.modifyParams.id,
                 Name: this.modifyParams.name,
                 Password: this.modifyParams.password,
@@ -84,27 +73,19 @@ export default Vue.extend({
                 Type: this.modifyParams.type,
                 Status: this.modifyParams.status
             }
-            let formParams = Utils.HandleRequest.ConvertObjToForm(params);
-            this.axios.post(url, formParams).then((response: any) => {
-                if (response.data.error_code == 0) {
-                    this.loading = false;
-                    this.dialogVisible = false;
-                    this.getAdmins();
-                    this.modifyParams = {
-                        id: null,
-                        name: '',
-                        password: '',
-                        type: null,
-                        status: null
-                    };
-                    this.dialogTitle = '新增';
-                    this.display = true;
-                } else {
-                    Utils.ElementUI.MessageTips(response.data.error, 3);
-                }
-
-            }).catch((error: any) => {
-                alert('数据异常：' + error);
+            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                this.loading = false;
+                this.dialogVisible = false;
+                this.getAdmins();
+                this.modifyParams = {
+                    id: null,
+                    name: '',
+                    password: '',
+                    type: null,
+                    status: null
+                };
+                this.dialogTitle = '新增';
+                this.display = true;
             });
         },
         /**
@@ -127,7 +108,8 @@ export default Vue.extend({
                 name: '',
                 password: '',
                 type: null,
-                status: null
+                status: null,
+                avatar: null
             }
         },
         /**
@@ -154,21 +136,12 @@ export default Vue.extend({
             this.loading = true;
             let url: string = SharedData.ApiUrl + "Administrator/DeleteAdmin";
             let params = {
-                token: sessionStorage.getItem('adminToken'),
                 adminID: row.ID
-            }
-            let formParams = Utils.HandleRequest.ConvertObjToForm(params);
-            this.axios.post(url, formParams).then((response: any) => {
-                if (response.data.error_code == 0) {
-                    this.loading = false;
-                    Utils.ElementUI.MessageTips("删除成功！", 2);
-                    this.getAdmins();
-                } else {
-                    Utils.ElementUI.MessageTips(response.data.error, 3);
-                }
-
-            }).catch((error: any) => {
-                alert('数据异常：' + error);
+            };
+            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                this.loading = false;
+                Utils.ElementUI.MessageTips("删除成功！", 2);
+                this.getAdmins();
             });
         },
         /**
@@ -214,7 +187,5 @@ export default Vue.extend({
     },
     mounted() {
         this.getAdmins();
-        let ss = Utils.HandleEnums.ConvertValueToLabel(SharedData.AdminTypeOptions, 2);
-
     }
 });
