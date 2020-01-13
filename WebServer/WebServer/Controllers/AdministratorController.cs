@@ -11,6 +11,11 @@ namespace WebServer.Controllers
     public class AdministratorController : SuperController
     {
         #region 添加/修改管理员
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formAdmin"></param>
+        /// <returns></returns>
         public JsonResult ModifyAdmin(Models.Administrator formAdmin)
         {
             try
@@ -139,6 +144,11 @@ namespace WebServer.Controllers
         #endregion
 
         #region 删除管理员
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adminID"></param>
+        /// <returns></returns>
         public JsonResult DeleteAdmin(int adminID)
         {
             try
