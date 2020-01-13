@@ -60,7 +60,6 @@ export default Vue.extend({
                 oldPassword: [{ required: true, validator: validOldPassword, trigger: 'blur' }],
                 password: [{ required: true, validator: validPassword, trigger: 'blur' }],
             },
-            // oldPassword: "",
             isCollapse: false,
             adminName: null,
             adminAvatar: SharedData.OnlineAdmin.Avatar,

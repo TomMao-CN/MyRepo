@@ -15,18 +15,10 @@ export default Vue.extend({
             this.loading = true;
             let url: string = SharedData.ApiUrl + "ExceptionLog/GetExceptionLogList";
             let params = {
-                token: sessionStorage.getItem('adminToken')
+               
             }
-            let formParams = Utils.HandleRequest.ConvertObjToForm(params);
-            this.axios.post(url, formParams).then((response: any) => {
-                if (response.data.error_code == 0) {
-                    this.loading = false;
-                } else {
-                    Utils.ElementUI.MessageTips(response.data.error, 3);
-                }
+            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
 
-            }).catch((error: any) => {
-                alert('数据异常：' + error);
             });
         },
     },

@@ -77,11 +77,11 @@
     <!-- 弹出框 -->
     <div class="dialog">
       <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
-        <el-form label-width="90px">
-          <el-form-item label="姓名" v-if="display">
+        <el-form label-width="100px" :model="modifyParams" :rules="modifyRules" ref="modifyParams">
+          <el-form-item label="姓名" prop="name" v-if="display">
             <el-input type="text" v-model="modifyParams.name"></el-input>
           </el-form-item>
-          <el-form-item label="头像" v-if="display">
+          <el-form-item label="头像" prop="avatar" v-if="display">
             <el-upload
               class="avatar-uploader"
               :action="adminAvatarUpUrl"
@@ -93,10 +93,10 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
-          <el-form-item label="密码" v-if="display">
+          <el-form-item prop="password" label="密码" v-if="display">
             <el-input type="password" v-model="modifyParams.password"></el-input>
           </el-form-item>
-          <el-form-item label="管理员类型">
+          <el-form-item prop="type" label="管理员类型">
             <el-select v-model="modifyParams.type" placeholder="管理员类型">
               <el-option
                 v-for="item in typeOptions"
@@ -106,7 +106,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="角色状态">
+          <el-form-item prop="status" label="角色状态">
             <el-select v-model="modifyParams.status" placeholder="角色状态">
               <el-option
                 v-for="item in statusOptions"

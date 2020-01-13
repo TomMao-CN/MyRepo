@@ -22,14 +22,16 @@
           active-text-color="#ffd04b"
         >
           <template v-for="item in adminMenus">
-            <template v-if="item.hidden==false">
+            <template v-if="item.display==true">
               <el-submenu :index="item.name" :key="item.name">
                 <template slot="title">
                   <i :class="item.icon"></i>
                   <span slot="title">{{item.name}}</span>
                 </template>
                 <template v-for="_item in item.children">
-                  <el-menu-item :index="_item.path" :key="_item.path">{{_item.name}}</el-menu-item>
+                  <template v-if="_item.display==true">
+                    <el-menu-item :index="_item.path" :key="_item.path">{{_item.name}}</el-menu-item>
+                  </template>
                 </template>
               </el-submenu>
             </template>

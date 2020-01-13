@@ -26,5 +26,16 @@ export namespace SharedData {
             label: '审核中'
         }
     ];
+    //下拉框角色状态
+    export let DataStatusOptions = [
+        {
+            value: SharedEnums.SharedStatus.Normal,
+            label: '正常'
+        },
+        {
+            value: SharedEnums.SharedStatus.Verify,
+            label: '审核中'
+        }
+    ];
 
 }

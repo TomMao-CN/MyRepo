@@ -5,6 +5,31 @@ import { SharedData } from '@/common/shared-data';
 
 export default Vue.extend({
     data() {
+        //验证用户名
+        let validName = (rule: any, value: any, callback: any) => {
+            if (!value) {
+                return callback(new Error('用户名不能为空！'));
+            } else {
+                if (value.length < 2 || value.length > 8) {
+                    return callback(new Error('用户名不得小于2位或者大于8位'));
+                } else {
+                    return callback();
+                }
+            }
+        };
+        //验证密码
+        let validPassword = (rule: any, value: any, callback: any) => {
+            if (!value) {
+                return callback(new Error('密码不能为空！'));
+            } else {
+                if (!Utils.ValidInfo.ValidPassword(value)) {
+                    return callback(new Error('密码只能由字母和数字组成！'));
+                }
+                else {
+                    return callback();
+                }
+            }
+        };
         return {
             //
             searchParams: {
@@ -20,6 +45,13 @@ export default Vue.extend({
                 password: '',
                 type: null,
                 status: null
+            },
+            modifyRules: {
+                name: [{ required: true, validator: validName, trigger: 'blur' }],
+                avatar: [{ required: true, message: '头像不能为空！', trigger: 'blur' }],
+                password: [{ required: true, validator: validPassword, trigger: 'blur' }],
+                type: [{ required: true, message: '管理员类型不能为空！', trigger: 'blur' }],
+                status: [{ required: true, message: '角色状态不能为空！', trigger: 'blur' }],
             },
             administrators: null,
             totalCount: 0,
@@ -63,29 +95,33 @@ export default Vue.extend({
          * 新增or编辑管理员
          */
         modifyAdmin() {
-            this.loading = true;
-            let url: string = SharedData.ApiUrl + "Administrator/ModifyAdmin";
-            let params = {
-                ID: this.modifyParams.id,
-                Name: this.modifyParams.name,
-                Password: this.modifyParams.password,
-                Avatar: this.modifyParams.avatar,
-                Type: this.modifyParams.type,
-                Status: this.modifyParams.status
-            }
-            Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
-                this.loading = false;
-                this.dialogVisible = false;
-                this.getAdmins();
-                this.modifyParams = {
-                    id: null,
-                    name: '',
-                    password: '',
-                    type: null,
-                    status: null
-                };
-                this.dialogTitle = '新增';
-                this.display = true;
+            this.$refs.modifyParams.validate((valid: string | number) => {
+                if (valid) {
+                    this.loading = true;
+                    let url: string = SharedData.ApiUrl + "Administrator/ModifyAdmin";
+                    let params = {
+                        ID: this.modifyParams.id,
+                        Name: this.modifyParams.name,
+                        Password: this.modifyParams.password,
+                        Avatar: this.modifyParams.avatar,
+                        Type: this.modifyParams.type,
+                        Status: this.modifyParams.status
+                    }
+                    Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                        this.loading = false;
+                        this.dialogVisible = false;
+                        this.getAdmins();
+                        this.modifyParams = {
+                            id: null,
+                            name: '',
+                            password: '',
+                            type: null,
+                            status: null
+                        };
+                        this.dialogTitle = '新增';
+                        this.display = true;
+                    });
+                }
             });
         },
         /**
@@ -103,6 +139,7 @@ export default Vue.extend({
             this.dialogVisible = false;
             this.dialogTitle = '新增';
             this.display = true;
+            this.$refs.modifyParams.resetFields();
             this.modifyParams = {
                 id: null,
                 name: '',
