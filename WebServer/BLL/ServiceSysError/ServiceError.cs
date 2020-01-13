@@ -8,7 +8,7 @@ namespace BLL
 {
     public class ServiceError
     {
-        public string GetErrorInfo(int errorCode)
+        public  string GetErrorInfo(int errorCode)
         {
             return ErrorData[errorCode];
         }
@@ -25,8 +25,12 @@ namespace BLL
                 #endregion
 
                 #region 用户类错误
-                result.Add(20001, "用户不存在！");
+                result.Add(20001, "角色不存在！");
                 result.Add(20002, "密码错误！");
+                #endregion
+
+                #region 权限类错误
+                //result.Add(30001, "此管理员为！");
                 #endregion
                 return result;
             }
