@@ -13,7 +13,8 @@
 ```
 ### 项目效果图
 ```
-MyDemoImages/登陆.png
+https://github.com/TomMao-CN/ImageDepository/blob/master/MyDemoImages/%E7%99%BB%E9%99%86.png
+
 MyDemoImages/管理员.png
 MyDemoImages/授权1.png
 MyDemoImages/授权2.png
