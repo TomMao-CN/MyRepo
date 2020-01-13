@@ -12,7 +12,6 @@
 前端管理。使用vue + element + typescript。
 ```
 ### 项目效果图
-```
 ![登陆](https://github.com/TomMao-CN/ImageDepository/blob/master/MyDemoImages/%E7%99%BB%E9%99%86.png)
 ![](https://github.com/TomMao-CN/ImageDepository/blob/master/MyDemoImages/%E7%AE%A1%E7%90%86%E5%91%98.png)
 ![](https://github.com/TomMao-CN/ImageDepository/blob/master/MyDemoImages/%E6%8E%88%E6%9D%831.png)
