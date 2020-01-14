@@ -2,7 +2,7 @@
   <div class="every-page">
     <div class="toolbar">
       <el-button type="primary" icon="el-icon-d-arrow-left" @click="goBack">返回</el-button>
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增权限</el-button>
     </div>
     <div class="content">
       <el-table :data="adminSyses" v-loading="loading">
@@ -13,8 +13,16 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
+              type="primary"
+              icon="el-icon-switch-button"
+              :loading="loading"
+              circle
+              @click="handleSwitch(scope.$index, scope.row)"
+            ></el-button>
+            <el-button
               type="danger"
               icon="el-icon-delete"
+              :loading="loading"
               circle
               @click="handleDelete(scope.$index, scope.row)"
             ></el-button>
@@ -39,7 +47,7 @@
           <el-form-item label="姓名">
             <el-input type="text" :disabled="true" v-model="modifyParams.adminName"></el-input>
           </el-form-item>
-          <el-form-item label="系统">
+          <el-form-item label="系统" prop="sysID">
             <el-select v-model="modifyParams.sysID" placeholder="系统">
               <el-option
                 v-for="item in sysOptions"
@@ -49,7 +57,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="数据状态">
+          <el-form-item label="数据状态" prop="status">
             <el-select v-model="modifyParams.status" placeholder="数据状态">
               <el-option
                 v-for="item in statusOptions"

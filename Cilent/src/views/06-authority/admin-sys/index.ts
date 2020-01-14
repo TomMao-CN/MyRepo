@@ -13,7 +13,8 @@ export default Vue.extend({
                 status: null
             },
             modifyRules: {
-
+                sysID: [{ required: true, message: '系统不能为空！', trigger: 'blur' }],
+                status: [{ required: true, message: '状态不能为空！', trigger: 'blur' }]
             },
             statusOptions: SharedData.DataStatusOptions,
             sysOptions: null,
@@ -50,25 +51,46 @@ export default Vue.extend({
          * 添加管理系统
          */
         addAdminSys() {
+            this.$refs.modifyParams.validate((valid: string | number) => {
+                if (valid) {
+                    this.loading = true;
+                    let url: string = SharedData.ApiUrl + "Authority/AddAdminSys";
+                    let params = {
+                        AdminID: this.modifyParams.adminID,
+                        SysID: this.modifyParams.sysID,
+                        Status: this.modifyParams.status
+                    }
+                    Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
+                        Utils.ElementUI.MessageTips("添加成功！", 1);
+                        this.loading = false;
+                        this.getAdminSys();
+                        this.dialogVisible = false;
+                        this.modifyParams = {
+                            adminID: this.$route.query.ID,
+                            sysID: null,
+                            status: null
+                        };
+                    });
+                }
+            });
+        },
+        handleSwitch(index: number, row: any) {
             this.loading = true;
             let url: string = SharedData.ApiUrl + "Authority/AddAdminSys";
             let params = {
-                AdminID: this.modifyParams.adminID,
-                SysID: this.modifyParams.sysID,
-                Status: this.modifyParams.status
+                ID: row.ID,
+                Status: row.Status == SharedEnums.SharedStatus.Normal ? SharedEnums.SharedStatus.Verify : SharedEnums.SharedStatus.Normal
             }
             Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
-                Utils.ElementUI.MessageTips("添加成功！", 1);
                 this.loading = false;
                 this.getAdminSys();
-                this.dialogVisible = false;
-                this.modifyParams = {
-                    adminID: this.$route.query.ID,
-                    sysID: null,
-                    status: null
-                };
             });
         },
+        /**
+         * 处理删除
+         * @param index 
+         * @param row 
+         */
         handleDelete(index: number, row: any) {
             this.loading = true;
             let url: string = SharedData.ApiUrl + "Authority/DeleteAdminSys";
@@ -88,6 +110,7 @@ export default Vue.extend({
             this.dialogVisible = false;
             this.modifyParams = {
                 adminID: this.$route.query.ID,
+                adminName: this.$route.query.Name,
                 sysID: null,
                 status: null
             }
@@ -125,9 +148,9 @@ export default Vue.extend({
          * 获取所有系统
          */
         getAllSys() {
-            let url: string = SharedData.ApiUrl + "Authority/GetAllSys";
+            let url: string = SharedData.ApiUrl + "Authority/GetOtherSys";
             let params = {
-
+                adminID: this.$route.query.ID
             }
             Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
                 let temp = [];

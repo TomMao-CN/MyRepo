@@ -1,6 +1,9 @@
 import { SharedEnums } from '@/common/enums';
 export namespace SharedData {
     //请求接口域名
+    //花生壳域名
+    // export const ApiUrl = "http://2d8665909o.wicp.vip/";
+    //本机开发域名
     export const ApiUrl = "http://tommao.com/";
     //当前登陆的管理员
     export let OnlineAdmin = JSON.parse(sessionStorage.getItem('admin'));

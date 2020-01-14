@@ -21,7 +21,7 @@
         <el-table-column prop="Name" label="姓名"></el-table-column>
         <el-table-column prop="Type" label="管理员类型" :formatter="convetRoleType"></el-table-column>
         <el-table-column prop="Status" label="角色状态" :formatter="convertStatus"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="权限分配">
           <template slot-scope="scope">
             <el-button
               type="primary"
