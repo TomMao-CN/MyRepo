@@ -50,7 +50,7 @@
     <Compile Include="ServiceSysError\ServiceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceAdministrator.cs" />
-    <Compile Include="ServiceMenu.cs" />
+    <Compile Include="ServiceAuthority.cs" />
     <Compile Include="ServiceUser.cs" />
     <Compile Include="SuperClass\SuperClass.cs" />
   </ItemGroup>
