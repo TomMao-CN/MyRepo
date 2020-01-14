@@ -10,12 +10,14 @@ namespace Common
     {
         #region 转换时间格式
         /// <summary>
-        /// 转换时间格式。type=1,format=1996-08-09
+        /// 转换时间格式。
+        /// type=1=yyyy-MM-dd
+        /// type=2=yyyy-MM-dd HH:mm:ss
         /// </summary>
         /// <param name="dateTime">时间</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
-        public static string ConvertDateTime(DateTime dateTime, int type)
+        public static string ConvertDateTimeToStr(DateTime dateTime, int type)
         {
             switch (type)
             {
