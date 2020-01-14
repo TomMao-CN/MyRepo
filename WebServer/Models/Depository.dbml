@@ -32,31 +32,41 @@
       <Column Name="LoginTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Administrator_AdminMenu" Member="AdminMenu" ThisKey="ID" OtherKey="AdminID" Type="AdminMenu" />
+      <Association Name="Administrator_AdminSys" Member="AdminSys" ThisKey="ID" OtherKey="AdminID" Type="AdminSys" />
     </Type>
   </Table>
-  <Table Name="dbo.AdminMenu" Member="AdminMenu">
-    <Type Name="AdminMenu">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="AdminID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MenuID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="AuthorizeTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Administrator_AdminMenu" Member="Administrator" ThisKey="AdminID" OtherKey="ID" Type="Administrator" IsForeignKey="true" />
-      <Association Name="Menu_AdminMenu" Member="Menu" ThisKey="MenuID" OtherKey="ID" Type="Menu" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Menu" Member="Menu">
-    <Type Name="Menu">
+  <Table Name="dbo.AdminSys" Member="AdminSys">
+    <Type Name="AdminSys">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Number" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Hidden" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Icon" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Path" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="ParentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AdminID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SysID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuthorityTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Menu_AdminMenu" Member="AdminMenu" ThisKey="ID" OtherKey="MenuID" Type="AdminMenu" />
+      <Association Name="Administrator_AdminSys" Member="Administrator" ThisKey="AdminID" OtherKey="ID" Type="Administrator" IsForeignKey="true" />
+      <Association Name="AuthoritySys_AdminSys" Member="AuthoritySys" ThisKey="SysID" OtherKey="ID" Type="AuthoritySys" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuthoritySys" Member="AuthoritySys">
+    <Type Name="AuthoritySys">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Icon" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Display" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AuthoritySys_AdminSys" Member="AdminSys" ThisKey="ID" OtherKey="SysID" Type="AdminSys" />
+      <Association Name="AuthoritySys_SysMenus" Member="SysMenus" ThisKey="ID" OtherKey="SysID" Type="SysMenus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SysMenus" Member="SysMenus">
+    <Type Name="SysMenus">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Display" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SysID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AuthoritySys_SysMenus" Member="AuthoritySys" ThisKey="SysID" OtherKey="ID" Type="AuthoritySys" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

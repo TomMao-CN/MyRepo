@@ -39,12 +39,15 @@ namespace Models
     partial void InsertAdministrator(Administrator instance);
     partial void UpdateAdministrator(Administrator instance);
     partial void DeleteAdministrator(Administrator instance);
-    partial void InsertAdminMenu(AdminMenu instance);
-    partial void UpdateAdminMenu(AdminMenu instance);
-    partial void DeleteAdminMenu(AdminMenu instance);
-    partial void InsertMenu(Menu instance);
-    partial void UpdateMenu(Menu instance);
-    partial void DeleteMenu(Menu instance);
+    partial void InsertAdminSys(AdminSys instance);
+    partial void UpdateAdminSys(AdminSys instance);
+    partial void DeleteAdminSys(AdminSys instance);
+    partial void InsertAuthoritySys(AuthoritySys instance);
+    partial void UpdateAuthoritySys(AuthoritySys instance);
+    partial void DeleteAuthoritySys(AuthoritySys instance);
+    partial void InsertSysMenus(SysMenus instance);
+    partial void UpdateSysMenus(SysMenus instance);
+    partial void DeleteSysMenus(SysMenus instance);
     #endregion
 		
 		public DepositoryDataContext() : 
@@ -101,19 +104,27 @@ namespace Models
 			}
 		}
 		
-		public System.Data.Linq.Table<AdminMenu> AdminMenu
+		public System.Data.Linq.Table<AdminSys> AdminSys
 		{
 			get
 			{
-				return this.GetTable<AdminMenu>();
+				return this.GetTable<AdminSys>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Menu> Menu
+		public System.Data.Linq.Table<AuthoritySys> AuthoritySys
 		{
 			get
 			{
-				return this.GetTable<Menu>();
+				return this.GetTable<AuthoritySys>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SysMenus> SysMenus
+		{
+			get
+			{
+				return this.GetTable<SysMenus>();
 			}
 		}
 	}
@@ -552,7 +563,7 @@ namespace Models
 		
 		private int _Status;
 		
-		private EntitySet<AdminMenu> _AdminMenu;
+		private EntitySet<AdminSys> _AdminSys;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -578,7 +589,7 @@ namespace Models
 		
 		public Administrator()
 		{
-			this._AdminMenu = new EntitySet<AdminMenu>(new Action<AdminMenu>(this.attach_AdminMenu), new Action<AdminMenu>(this.detach_AdminMenu));
+			this._AdminSys = new EntitySet<AdminSys>(new Action<AdminSys>(this.attach_AdminSys), new Action<AdminSys>(this.detach_AdminSys));
 			OnCreated();
 		}
 		
@@ -742,16 +753,16 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Administrator_AdminMenu", Storage="_AdminMenu", ThisKey="ID", OtherKey="AdminID")]
-		public EntitySet<AdminMenu> AdminMenu
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Administrator_AdminSys", Storage="_AdminSys", ThisKey="ID", OtherKey="AdminID")]
+		public EntitySet<AdminSys> AdminSys
 		{
 			get
 			{
-				return this._AdminMenu;
+				return this._AdminSys;
 			}
 			set
 			{
-				this._AdminMenu.Assign(value);
+				this._AdminSys.Assign(value);
 			}
 		}
 		
@@ -775,21 +786,21 @@ namespace Models
 			}
 		}
 		
-		private void attach_AdminMenu(AdminMenu entity)
+		private void attach_AdminSys(AdminSys entity)
 		{
 			this.SendPropertyChanging();
 			entity.Administrator = this;
 		}
 		
-		private void detach_AdminMenu(AdminMenu entity)
+		private void detach_AdminSys(AdminSys entity)
 		{
 			this.SendPropertyChanging();
 			entity.Administrator = null;
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AdminMenu")]
-	public partial class AdminMenu : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AdminSys")]
+	public partial class AdminSys : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -798,15 +809,15 @@ namespace Models
 		
 		private int _AdminID;
 		
-		private int _MenuID;
+		private int _SysID;
 		
-		private System.DateTime _AuthorizeTime;
+		private System.DateTime _AuthorityTime;
 		
 		private int _Status;
 		
 		private EntityRef<Administrator> _Administrator;
 		
-		private EntityRef<Menu> _Menu;
+		private EntityRef<AuthoritySys> _AuthoritySys;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -816,22 +827,22 @@ namespace Models
     partial void OnIDChanged();
     partial void OnAdminIDChanging(int value);
     partial void OnAdminIDChanged();
-    partial void OnMenuIDChanging(int value);
-    partial void OnMenuIDChanged();
-    partial void OnAuthorizeTimeChanging(System.DateTime value);
-    partial void OnAuthorizeTimeChanged();
+    partial void OnSysIDChanging(int value);
+    partial void OnSysIDChanged();
+    partial void OnAuthorityTimeChanging(System.DateTime value);
+    partial void OnAuthorityTimeChanged();
     partial void OnStatusChanging(int value);
     partial void OnStatusChanged();
     #endregion
 		
-		public AdminMenu()
+		public AdminSys()
 		{
 			this._Administrator = default(EntityRef<Administrator>);
-			this._Menu = default(EntityRef<Menu>);
+			this._AuthoritySys = default(EntityRef<AuthoritySys>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ID
 		{
 			get
@@ -875,46 +886,46 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MenuID", DbType="Int NOT NULL")]
-		public int MenuID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SysID", DbType="Int NOT NULL")]
+		public int SysID
 		{
 			get
 			{
-				return this._MenuID;
+				return this._SysID;
 			}
 			set
 			{
-				if ((this._MenuID != value))
+				if ((this._SysID != value))
 				{
-					if (this._Menu.HasLoadedOrAssignedValue)
+					if (this._AuthoritySys.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnMenuIDChanging(value);
+					this.OnSysIDChanging(value);
 					this.SendPropertyChanging();
-					this._MenuID = value;
-					this.SendPropertyChanged("MenuID");
-					this.OnMenuIDChanged();
+					this._SysID = value;
+					this.SendPropertyChanged("SysID");
+					this.OnSysIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorizeTime", DbType="DateTime NOT NULL")]
-		public System.DateTime AuthorizeTime
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorityTime", DbType="DateTime NOT NULL")]
+		public System.DateTime AuthorityTime
 		{
 			get
 			{
-				return this._AuthorizeTime;
+				return this._AuthorityTime;
 			}
 			set
 			{
-				if ((this._AuthorizeTime != value))
+				if ((this._AuthorityTime != value))
 				{
-					this.OnAuthorizeTimeChanging(value);
+					this.OnAuthorityTimeChanging(value);
 					this.SendPropertyChanging();
-					this._AuthorizeTime = value;
-					this.SendPropertyChanged("AuthorizeTime");
-					this.OnAuthorizeTimeChanged();
+					this._AuthorityTime = value;
+					this.SendPropertyChanged("AuthorityTime");
+					this.OnAuthorityTimeChanged();
 				}
 			}
 		}
@@ -939,7 +950,7 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Administrator_AdminMenu", Storage="_Administrator", ThisKey="AdminID", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Administrator_AdminSys", Storage="_Administrator", ThisKey="AdminID", OtherKey="ID", IsForeignKey=true)]
 		public Administrator Administrator
 		{
 			get
@@ -956,12 +967,12 @@ namespace Models
 					if ((previousValue != null))
 					{
 						this._Administrator.Entity = null;
-						previousValue.AdminMenu.Remove(this);
+						previousValue.AdminSys.Remove(this);
 					}
 					this._Administrator.Entity = value;
 					if ((value != null))
 					{
-						value.AdminMenu.Add(this);
+						value.AdminSys.Add(this);
 						this._AdminID = value.ID;
 					}
 					else
@@ -973,36 +984,36 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_AdminMenu", Storage="_Menu", ThisKey="MenuID", OtherKey="ID", IsForeignKey=true)]
-		public Menu Menu
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthoritySys_AdminSys", Storage="_AuthoritySys", ThisKey="SysID", OtherKey="ID", IsForeignKey=true)]
+		public AuthoritySys AuthoritySys
 		{
 			get
 			{
-				return this._Menu.Entity;
+				return this._AuthoritySys.Entity;
 			}
 			set
 			{
-				Menu previousValue = this._Menu.Entity;
+				AuthoritySys previousValue = this._AuthoritySys.Entity;
 				if (((previousValue != value) 
-							|| (this._Menu.HasLoadedOrAssignedValue == false)))
+							|| (this._AuthoritySys.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Menu.Entity = null;
-						previousValue.AdminMenu.Remove(this);
+						this._AuthoritySys.Entity = null;
+						previousValue.AdminSys.Remove(this);
 					}
-					this._Menu.Entity = value;
+					this._AuthoritySys.Entity = value;
 					if ((value != null))
 					{
-						value.AdminMenu.Add(this);
-						this._MenuID = value.ID;
+						value.AdminSys.Add(this);
+						this._SysID = value.ID;
 					}
 					else
 					{
-						this._MenuID = default(int);
+						this._SysID = default(int);
 					}
-					this.SendPropertyChanged("Menu");
+					this.SendPropertyChanged("AuthoritySys");
 				}
 			}
 		}
@@ -1028,29 +1039,27 @@ namespace Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Menu")]
-	public partial class Menu : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthoritySys")]
+	public partial class AuthoritySys : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _ID;
 		
-		private string _Number;
-		
 		private string _Name;
-		
-		private bool _Hidden;
-		
-		private string _Icon;
 		
 		private string _Path;
 		
-		private int _ParentID;
+		private string _Icon;
+		
+		private bool _Display;
 		
 		private int _Status;
 		
-		private EntitySet<AdminMenu> _AdminMenu;
+		private EntitySet<AdminSys> _AdminSys;
+		
+		private EntitySet<SysMenus> _SysMenus;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -1058,25 +1067,22 @@ namespace Models
     partial void OnCreated();
     partial void OnIDChanging(int value);
     partial void OnIDChanged();
-    partial void OnNumberChanging(string value);
-    partial void OnNumberChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnHiddenChanging(bool value);
-    partial void OnHiddenChanged();
-    partial void OnIconChanging(string value);
-    partial void OnIconChanged();
     partial void OnPathChanging(string value);
     partial void OnPathChanged();
-    partial void OnParentIDChanging(int value);
-    partial void OnParentIDChanged();
+    partial void OnIconChanging(string value);
+    partial void OnIconChanged();
+    partial void OnDisplayChanging(bool value);
+    partial void OnDisplayChanged();
     partial void OnStatusChanging(int value);
     partial void OnStatusChanged();
     #endregion
 		
-		public Menu()
+		public AuthoritySys()
 		{
-			this._AdminMenu = new EntitySet<AdminMenu>(new Action<AdminMenu>(this.attach_AdminMenu), new Action<AdminMenu>(this.detach_AdminMenu));
+			this._AdminSys = new EntitySet<AdminSys>(new Action<AdminSys>(this.attach_AdminSys), new Action<AdminSys>(this.detach_AdminSys));
+			this._SysMenus = new EntitySet<SysMenus>(new Action<SysMenus>(this.attach_SysMenus), new Action<SysMenus>(this.detach_SysMenus));
 			OnCreated();
 		}
 		
@@ -1100,27 +1106,7 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Char(2) NOT NULL", CanBeNull=false)]
-		public string Number
-		{
-			get
-			{
-				return this._Number;
-			}
-			set
-			{
-				if ((this._Number != value))
-				{
-					this.OnNumberChanging(value);
-					this.SendPropertyChanging();
-					this._Number = value;
-					this.SendPropertyChanged("Number");
-					this.OnNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -1140,47 +1126,7 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hidden", DbType="Bit NOT NULL")]
-		public bool Hidden
-		{
-			get
-			{
-				return this._Hidden;
-			}
-			set
-			{
-				if ((this._Hidden != value))
-				{
-					this.OnHiddenChanging(value);
-					this.SendPropertyChanging();
-					this._Hidden = value;
-					this.SendPropertyChanged("Hidden");
-					this.OnHiddenChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Icon", DbType="NVarChar(20)")]
-		public string Icon
-		{
-			get
-			{
-				return this._Icon;
-			}
-			set
-			{
-				if ((this._Icon != value))
-				{
-					this.OnIconChanging(value);
-					this.SendPropertyChanging();
-					this._Icon = value;
-					this.SendPropertyChanged("Icon");
-					this.OnIconChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
 		public string Path
 		{
 			get
@@ -1200,22 +1146,42 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentID", DbType="Int NOT NULL")]
-		public int ParentID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Icon", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string Icon
 		{
 			get
 			{
-				return this._ParentID;
+				return this._Icon;
 			}
 			set
 			{
-				if ((this._ParentID != value))
+				if ((this._Icon != value))
 				{
-					this.OnParentIDChanging(value);
+					this.OnIconChanging(value);
 					this.SendPropertyChanging();
-					this._ParentID = value;
-					this.SendPropertyChanged("ParentID");
-					this.OnParentIDChanged();
+					this._Icon = value;
+					this.SendPropertyChanged("Icon");
+					this.OnIconChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Display", DbType="Bit NOT NULL")]
+		public bool Display
+		{
+			get
+			{
+				return this._Display;
+			}
+			set
+			{
+				if ((this._Display != value))
+				{
+					this.OnDisplayChanging(value);
+					this.SendPropertyChanging();
+					this._Display = value;
+					this.SendPropertyChanged("Display");
+					this.OnDisplayChanged();
 				}
 			}
 		}
@@ -1240,16 +1206,29 @@ namespace Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_AdminMenu", Storage="_AdminMenu", ThisKey="ID", OtherKey="MenuID")]
-		public EntitySet<AdminMenu> AdminMenu
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthoritySys_AdminSys", Storage="_AdminSys", ThisKey="ID", OtherKey="SysID")]
+		public EntitySet<AdminSys> AdminSys
 		{
 			get
 			{
-				return this._AdminMenu;
+				return this._AdminSys;
 			}
 			set
 			{
-				this._AdminMenu.Assign(value);
+				this._AdminSys.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthoritySys_SysMenus", Storage="_SysMenus", ThisKey="ID", OtherKey="SysID")]
+		public EntitySet<SysMenus> SysMenus
+		{
+			get
+			{
+				return this._SysMenus;
+			}
+			set
+			{
+				this._SysMenus.Assign(value);
 			}
 		}
 		
@@ -1273,16 +1252,251 @@ namespace Models
 			}
 		}
 		
-		private void attach_AdminMenu(AdminMenu entity)
+		private void attach_AdminSys(AdminSys entity)
 		{
 			this.SendPropertyChanging();
-			entity.Menu = this;
+			entity.AuthoritySys = this;
 		}
 		
-		private void detach_AdminMenu(AdminMenu entity)
+		private void detach_AdminSys(AdminSys entity)
 		{
 			this.SendPropertyChanging();
-			entity.Menu = null;
+			entity.AuthoritySys = null;
+		}
+		
+		private void attach_SysMenus(SysMenus entity)
+		{
+			this.SendPropertyChanging();
+			entity.AuthoritySys = this;
+		}
+		
+		private void detach_SysMenus(SysMenus entity)
+		{
+			this.SendPropertyChanging();
+			entity.AuthoritySys = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SysMenus")]
+	public partial class SysMenus : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private string _Path;
+		
+		private bool _Display;
+		
+		private int _SysID;
+		
+		private int _Status;
+		
+		private EntityRef<AuthoritySys> _AuthoritySys;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPathChanging(string value);
+    partial void OnPathChanged();
+    partial void OnDisplayChanging(bool value);
+    partial void OnDisplayChanged();
+    partial void OnSysIDChanging(int value);
+    partial void OnSysIDChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public SysMenus()
+		{
+			this._AuthoritySys = default(EntityRef<AuthoritySys>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string Path
+		{
+			get
+			{
+				return this._Path;
+			}
+			set
+			{
+				if ((this._Path != value))
+				{
+					this.OnPathChanging(value);
+					this.SendPropertyChanging();
+					this._Path = value;
+					this.SendPropertyChanged("Path");
+					this.OnPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Display", DbType="Bit NOT NULL")]
+		public bool Display
+		{
+			get
+			{
+				return this._Display;
+			}
+			set
+			{
+				if ((this._Display != value))
+				{
+					this.OnDisplayChanging(value);
+					this.SendPropertyChanging();
+					this._Display = value;
+					this.SendPropertyChanged("Display");
+					this.OnDisplayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SysID", DbType="Int NOT NULL")]
+		public int SysID
+		{
+			get
+			{
+				return this._SysID;
+			}
+			set
+			{
+				if ((this._SysID != value))
+				{
+					if (this._AuthoritySys.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSysIDChanging(value);
+					this.SendPropertyChanging();
+					this._SysID = value;
+					this.SendPropertyChanged("SysID");
+					this.OnSysIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthoritySys_SysMenus", Storage="_AuthoritySys", ThisKey="SysID", OtherKey="ID", IsForeignKey=true)]
+		public AuthoritySys AuthoritySys
+		{
+			get
+			{
+				return this._AuthoritySys.Entity;
+			}
+			set
+			{
+				AuthoritySys previousValue = this._AuthoritySys.Entity;
+				if (((previousValue != value) 
+							|| (this._AuthoritySys.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AuthoritySys.Entity = null;
+						previousValue.SysMenus.Remove(this);
+					}
+					this._AuthoritySys.Entity = value;
+					if ((value != null))
+					{
+						value.SysMenus.Add(this);
+						this._SysID = value.ID;
+					}
+					else
+					{
+						this._SysID = default(int);
+					}
+					this.SendPropertyChanged("AuthoritySys");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
