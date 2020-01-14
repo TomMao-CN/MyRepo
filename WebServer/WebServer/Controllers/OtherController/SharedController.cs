@@ -41,8 +41,8 @@ namespace WebServer.Controllers
                         administrator.Type,
                         administrator.Avatar,
                         administrator.Status,
-                        administrator.Password
-                        //Menus = new BLL.ServiceMenu().GetAdminMenu(administrator.ID)
+                        administrator.Password,
+                        Menus = administrator.Type == (int)Models.Enums.AdminType.SuperAdmin ? null : new BLL.ServiceAuthority().GetAdminMenu(administrator.ID)
                     };
                 }
             }

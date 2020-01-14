@@ -66,13 +66,16 @@ namespace WebServer.Controllers
         }
         #endregion
 
-        #region 获取全部系统
-        public JsonResult GetAllSys()
+        #region 获取未管理的系统
+        public JsonResult GetOtherSys(int adminID)
         {
             object result = new object();
             try
             {
-                List<Models.AuthoritySys> authoritySyses = dataContext.AuthoritySys.Where(m => m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
+                List<int> bindSysID = dataContext.AdminSys.Where(m => m.AdminID == adminID).Select(m => m.SysID).ToList();
+                List<int> allSysID = dataContext.AuthoritySys.Where(m => m.Status == (int)Models.Enums.SharedStatus.Normal).Select(m =>m.ID).ToList();
+                List<int> noBindSysID = allSysID.Except(bindSysID).ToList();
+                List<Models.AuthoritySys> authoritySyses = dataContext.AuthoritySys.Where(m => noBindSysID.Contains(m.ID)&&m.Status == (int)Models.Enums.SharedStatus.Normal).ToList();
                 List<object> list = new List<object>();
                 if (authoritySyses.Count > 0)
                 {
@@ -119,7 +122,6 @@ namespace WebServer.Controllers
                 }
                 else
                 {
-                    adminSys.SysID = formObj.SysID;
                     adminSys.Status = formObj.Status;
                 }
                 dataContext.SubmitChanges();

@@ -156,6 +156,9 @@ namespace WebServer.Controllers
                 Models.Administrator administrator = dataContext.Administrator.Where(m => m.ID == adminID).FirstOrDefault();
                 if (administrator != null)
                 {
+                    //删除管理员绑定的系统
+                    List<Models.AdminSys> adminSyses = dataContext.AdminSys.Where(m=>m.AdminID==administrator.ID).ToList();
+                    dataContext.AdminSys.DeleteAllOnSubmit(adminSyses);
                     dataContext.Administrator.DeleteOnSubmit(administrator);
                     dataContext.SubmitChanges();
                 }
