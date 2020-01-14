@@ -8,6 +8,7 @@ import Admin from '@/views/04-admin/index.vue'
 import Exception from '@/views/05-exception/index.vue'
 import AuthorityAdmin from '@/views/06-authority/admin/index.vue'
 import AuthoritySys from '@/views/06-authority/admin-sys/index.vue'
+import Test from '@/views/07-test/index.vue'
 
 
 Vue.use(VueRouter)
@@ -47,6 +48,16 @@ const routes = [
     children: [
       { path: '/authority-admin', name: '授权管理员', display: true, component: AuthorityAdmin },
       { path: '/authority-sys', name: '权限分配', display: false, component: AuthoritySys }
+    ]
+  },
+  {
+    path: '/main',
+    name: '测试系统',
+    display: true,
+    icon: 'el-icon-edit-outline',
+    component: Main,
+    children: [
+      { path: '/test', name: '测试页', display: true, component: Test }
     ]
   },
   {

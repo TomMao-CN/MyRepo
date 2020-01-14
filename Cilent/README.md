@@ -47,3 +47,11 @@ cnpm install --save js-md5
 import md5 from 'js-md5'
 
 ```
+#### tinymce 富文本编辑器
+```
+安装方式
+npm install tinymce -S
+npm install @tinymce/tinymce-vue -S
+参考网站
+https://www.cnblogs.com/zhongchao666/p/11142537.html
+```
