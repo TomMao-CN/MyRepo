@@ -67,10 +67,18 @@ namespace WebServer.Controllers
             string result = string.Empty;
             try
             {
-                string imgName = string.Format("{0}.jpg", DateTime.Now.ToString("yyyyMMddHHmmss"));
-                string localPath = Server.MapPath("~/Resources/Images/" + imgName);
+                DateTime now = DateTime.Now;
+                string imgName = string.Format("{0}.jpg", now.ToString("yyyyMMddHHmmss"));
+              
+
+                string folder = string.Format(@"{0}Resources\Images\{1}", Models.SharedData.ProjectPath,now.ToString("yyyyMMdd"));
+                //检查是否有该文件夹，没有则创建
+                Common.HandleFiles.CreateDirectory(folder);
+
+                string localPath = string.Format(@"{0}\{1}",folder,imgName);
+
                 file.SaveAs(localPath);
-                string webPath = string.Format("{0}/Resources/Images/{1}", Common.HandleConfig.GetAppSettingValue("DomainName"), imgName).Replace("/", "\\");
+                string webPath = string.Format(@"{0}\Resources\Images\{1}\{2}", Models.SharedData.DomainName, now.ToString("yyyyMMdd"),imgName);
                 result = webPath;
             }
             catch (Exception ex)
