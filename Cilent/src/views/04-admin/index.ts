@@ -120,6 +120,7 @@ export default Vue.extend({
                         };
                         this.dialogTitle = '新增';
                         this.display = true;
+                        Utils.ElementUI.MessageTips("成功！", 1);
                     });
                 }
             });

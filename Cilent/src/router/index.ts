@@ -9,7 +9,7 @@ import Exception from '@/views/05-exception/index.vue'
 import AuthorityAdmin from '@/views/06-authority/admin/index.vue'
 import AuthoritySys from '@/views/06-authority/admin-sys/index.vue'
 import Test from '@/views/07-test/index.vue'
-
+import Blog from '@/views/08-blog/index.vue'
 
 Vue.use(VueRouter)
 
@@ -52,9 +52,19 @@ const routes = [
   },
   {
     path: '/main',
-    name: '测试系统',
+    name: '文档资讯',
     display: true,
     icon: 'el-icon-edit-outline',
+    component: Main,
+    children: [
+      { path: '/blog', name: '博客', display: true, component: Blog }
+    ]
+  },
+  {
+    path: '/main',
+    name: '测试系统',
+    display: true,
+    icon: 'el-icon-question',
     component: Main,
     children: [
       { path: '/test', name: '测试页', display: true, component: Test }
@@ -79,7 +89,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // 打包环境下用hash模式，不然会直接跳到*
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

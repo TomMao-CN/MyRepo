@@ -1,6 +1,9 @@
 <template>
   <div>
-    <tinymce ref="editor" v-model="msg" :url="uploadImgApi" />
+    <tinymce
+        ref="editor"
+        v-model="msg"
+    />
   </div>
 </template>
 <style lang="scss">

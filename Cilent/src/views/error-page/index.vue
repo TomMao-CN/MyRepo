@@ -1,12 +1,7 @@
 <template>
   <div class="error-page">
     <div class="error-img">
-      <img
-        class="face-image"
-        src="@/assets/404_face.png"
-        width="250px"
-        alt="404 not found"
-      />
+      <img class="face-image" src="@/assets/404_face.png" width="250px" alt="404 not found" />
     </div>
     <div class="error-msg">
       <h2>
@@ -14,9 +9,9 @@
       </h2>
       <p>抱歉！我们找不到您想访问的页面...</p>
       <br />
-      <a class="btn btn-default" href="https://leetcode-cn.com">
+      <router-link to="/home">
         <i class="fa fa-home" aria-hidden="true"></i> &nbsp;返回主页
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

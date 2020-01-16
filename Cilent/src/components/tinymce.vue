@@ -15,6 +15,7 @@ import "tinymce/plugins/media"; // 插入视频插件
 import "tinymce/plugins/table"; // 插入表格插件
 import "tinymce/plugins/lists"; // 列表插件
 import "tinymce/plugins/wordcount"; // 字数统计插件
+import { SharedData } from "../common/shared-data";
 export default {
   components: {
     Editor
@@ -42,20 +43,27 @@ export default {
   data() {
     return {
       init: {
+        // language_url: "/tinymce/langs/zh_CN.js",
+        //开发环境
         language_url: "/tinymce/langs/zh_CN.js",
         language: "zh_CN",
         skin_url: "/tinymce/skins/ui/oxide",
         skin_url: "tinymce/skins/ui/oxide-dark", //暗色系
-        height: 300,
+        height: 500,
         plugins: this.plugins,
         toolbar: this.toolbar,
         branding: false,
         menubar: false,
-        // 此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
-        // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
+        //图片上传处理函数
         images_upload_handler: (blobInfo, success, failure) => {
-          const img = "data:image/jpeg;base64," + blobInfo.base64();
-          success(img);
+          let url = SharedData.ApiUrl + "Shared/UploadImage";
+          let formData = new FormData();
+          formData.append("file", blobInfo.blob());
+
+          this.axios.post(url, formData).then(response => {
+            console.log(response);
+            success(response.data.data);
+          });
         }
       },
       myValue: this.value

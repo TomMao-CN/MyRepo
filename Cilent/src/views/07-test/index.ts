@@ -6,19 +6,20 @@ import { SharedData } from '@/common/shared-data';
 import { Utils } from '@/common/utils';
 
 export default Vue.extend({
-    components:{
+    components: {
+        //UEditor组件
         tinymce
     },
     data() {
         return {
-            msg:'sadkfasj;dlf',
-            uploadImgApi:SharedData.ApiUrl+'Shared/UploadImage'       
+            msg: 'lalala'
+          
         };
     },
     methods: {
-       
+
     },
-    mounted() { 
-       
+    mounted() {
+
     }
 });
