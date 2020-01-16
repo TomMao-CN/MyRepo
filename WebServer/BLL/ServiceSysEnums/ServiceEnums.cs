@@ -25,6 +25,11 @@ namespace BLL
                     return "";
             }
         }
+        /// <summary>
+        /// 转换角色状态
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public static string ConvertRoleStatus(int status)
         {
             switch (status)
@@ -32,6 +37,23 @@ namespace BLL
                 case (int)Models.Enums.RoleStatus.Normal:
                     return "正常";
                 case (int)Models.Enums.RoleStatus.Verify:
+                    return "审核中";
+                default:
+                    return "";
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static string ConvertSharedStatus(int status)
+        {
+            switch (status)
+            {
+                case (int)Models.Enums.SharedStatus.Normal:
+                    return "正常";
+                case (int)Models.Enums.SharedStatus.Verify:
                     return "审核中";
                 default:
                     return "";
