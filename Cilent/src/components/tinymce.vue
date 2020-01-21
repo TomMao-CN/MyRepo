@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       init: {
-        // language_url: "/tinymce/langs/zh_CN.js",
+        //发布环境
+        // language_url: "./tinymce/langs/zh_CN.js",
         //开发环境
         language_url: "/tinymce/langs/zh_CN.js",
         language: "zh_CN",

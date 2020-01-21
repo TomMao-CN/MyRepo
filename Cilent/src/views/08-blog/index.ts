@@ -106,7 +106,6 @@ export default Vue.extend({
          * 导出博客
          */
         exportBlogs() {
-            this.loading = true;
             let url: string = SharedData.ApiUrl + "Blog/ExportBlogs";
             let params = {
                 keyword: this.searchParams.keyword,
@@ -115,7 +114,6 @@ export default Vue.extend({
             Utils.HandleRequest.PostRequest(url, params).then((res: any) => {
                 console.log(res);
                 window.location.href=res.url;
-                this.loading = false;
             });
         },
         /**

@@ -10,6 +10,7 @@ import AuthorityAdmin from '@/views/06-authority/admin/index.vue'
 import AuthoritySys from '@/views/06-authority/admin-sys/index.vue'
 import Test from '@/views/07-test/index.vue'
 import Blog from '@/views/08-blog/index.vue'
+import Weather from '@/views/09-weather/index.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,16 @@ const routes = [
     component: Main,
     children: [
       { path: '/blog', name: '博客', display: true, component: Blog }
+    ]
+  },
+  {
+    path: '/main',
+    name: '天气系统',
+    display: true,
+    icon: 'el-icon-sunny',
+    component: Main,
+    children: [
+      { path: '/weather', name: '天气预报', display: true, component: Weather }
     ]
   },
   {
