@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceOther.cs" />
     <Compile Include="ServiceSysEnums\ServiceEnums.cs" />
     <Compile Include="ServiceSysError\ServiceError.cs" />
     <Compile Include="ServiceSysError\ServiceException.cs" />
