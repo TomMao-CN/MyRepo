@@ -11,6 +11,8 @@ namespace WebServer.Controllers
     public class OpenController : Controller
     {
         protected DepositoryDataContext dataContext = new DepositoryDataContext();
+        protected int errorCode = 0;
+        protected string error = string.Empty;
 
         #region 重载Json返回函数
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace WebServer.Controllers
 {
@@ -69,16 +70,16 @@ namespace WebServer.Controllers
             {
                 DateTime now = DateTime.Now;
                 string imgName = string.Format("{0}.jpg", now.ToString("yyyyMMddHHmmss"));
-              
 
-                string folder = string.Format(@"{0}Resources\Images\{1}", Models.SharedData.ProjectPath,now.ToString("yyyyMMdd"));
+
+                string folder = string.Format(@"{0}Resources\Images\{1}", Models.SharedData.ProjectPath, now.ToString("yyyyMMdd"));
                 //检查是否有该文件夹，没有则创建
                 Common.HandleFiles.CreateDirectory(folder);
 
-                string localPath = string.Format(@"{0}\{1}",folder,imgName);
+                string localPath = string.Format(@"{0}\{1}", folder, imgName);
 
                 file.SaveAs(localPath);
-                string webPath = string.Format(@"{0}\Resources\Images\{1}\{2}", Models.SharedData.DomainName, now.ToString("yyyyMMdd"),imgName);
+                string webPath = string.Format(@"{0}\Resources\Images\{1}\{2}", Models.SharedData.DomainName, now.ToString("yyyyMMdd"), imgName);
                 result = webPath;
             }
             catch (Exception ex)
