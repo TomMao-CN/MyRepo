@@ -20,6 +20,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 安装的组件
 
+#### vue-echarts
+```
+通过cnpm install后，项目任然会报错
+错误信息为缺少vue-echart相关组件
+这时要运行终端
+cnpm install echarts vue-echarts
+```
+
 #### font-awesome
 ```
 font-awesome字体图标库
